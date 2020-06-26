@@ -11,9 +11,11 @@ Output: "Jasmine%20Ann%Jones"
 
 Repeat: 
   // We want to write an algorithm that removes any whitespace from a string
+
 Examples: 
-  // Input - Frank the Bulldog is a party animal.
-  // Output - Frank%20the%20Bulldog%20is%20a%20party%20animal.
+  Input: // Frank the Bulldog is a party animal.
+  Output: // Frank%20the%20Bulldog%20is%20a%20party%20animal.
+
 Approach: 
   // I am thinking that I could use a split() and then a join(). It wont be as fast as a RegEx but that is okay.
   // We take our string split it, this automatically puts it into an array
@@ -26,6 +28,7 @@ Approach:
     // return string frank
   Recursively:
     //
+
 Code:
   WithoutRecursion:
 let frank = "Frank the Bulldog is a party animal.";
@@ -34,8 +37,10 @@ console.log(frank.split(' ').join('%20'));
 return frank;
   WithRecursion:
   // I am unsure
+
 Test:
   // Vocally run an example through
+
 Optimize:
   // WithoutRecursion:
   // Use replace() w/RegEx
@@ -65,9 +70,11 @@ Output: [7, 9, "hi", 12, 53]
 
 Repeat:
   // We want to clean up an array so that no key value pairs are repeated
+
 Examples:
-  // Input [frog, dragon, duck, duck, goose, dragon]
-  // OutPut [frog, dragon, duck, goose]
+  Input: [frog, dragon, duck, duck, goose, dragon]
+  OutPut: [frog, dragon, duck, goose]
+
 Approach:
   WithRecursion:
     // I am thinking that the best way to do this would be to use a recursive function that iterates through the array crosschecking key value pairs
@@ -75,6 +82,7 @@ Approach:
     // You select the first key value pair of the array and iterate through the array crosschecking it against everyother pair removing any duplications
   WithoutRecursion:
     // You can use a foreach loop to iterate through the array twice to compare the key value pairs and remove any duplicates
+
 Code:
   WithoutFilter: WithoutRecursion:
     // solving with the underscore lib extention for javascript
@@ -103,6 +111,7 @@ WithoutFilter: WithoutRecursion:
 
 Test:
   // Vocally run and example through
+
 Optimize:
   WithFilter: WithoutRecursion:
 let arr = [7, 9, "hi", 12, "hi", 7, 53];
@@ -129,11 +138,75 @@ Input: "aaabccdddda"
 
 Output: "3ab2c4da"
 
+ClarifyingQuestions: // Will we always be recieving a string with letters? 
+
 Repeat:
+  // We want to take a string and condense repeated characters. Then display the string with the characters numerical value in front of that character.
 Examples:
+  Input: "aaaabbc"
+  Output: "a4b2c1"
+
 Approach:
+  // create a string
+  // Iterate over the string
+  // Compare current and next characters
+  // If characters are the same, increment counter and concatenate
+
 Code:
+WithIteration:
+// To deal with edge cases and false inputs
+  function stringCompression (str) {
+    if (str.length == 0) {
+      console.log('Please enter valid string.');
+      return;
+    }
+// To deal with edge cases and false inputs
+
+    let output = '';
+    let count = 0;
+    for (let i = 0; i < str.length; i++) {
+      count++;
+      if (str[i] != str[i+1]) {
+        output += str[i] + count;
+        count = 0;
+      }
+    }
+    console.log(output);
+  }
+
+stringCompression(''); //Please enter valid string.
+stringCompression('aaaa'); //a4
+stringCompression('aaaabbc'); //a4b2c1
+stringCompression('aaaabbcaabb'); //a4b2c1a2b2
+
+// Another example https://kevhuang.com/string-compression-and-concatenation-performance/
+var compressedString = function(str) {  
+  if (str.length < 3) return str;
+
+  var compressedStr = '';
+  var prevChar = str.charAt(0);
+  var count = 1;
+
+  for (var i = 1; i < str.length; i++) {
+    if (str[i] !== prevChar) {
+      compressedStr += prevChar + count;
+      prevChar = str[i];
+      count = 1;
+    } else {
+      count++;
+    }
+  }
+  compressedStr += prevChar + count;
+
+  return compressedStr.length >= str.length ? str : compressedStr;
+};
+// If you have a large string and time is important, then a data structure like a StringBuffer would give you O(n) time. In a nutshell, a StringBuffer is an array that progressively collects each character of a string, and then at the end, it joins all the characters as a string. Thus, the concatenation only happens once at the very end instead of each time a new character is added. That does mean you end up with O(n) space though.
+
+WithRecursion:
+
 Test:
+  // Vocally run an example through
+
 Optimize:
 
 
