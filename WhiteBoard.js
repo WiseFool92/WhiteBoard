@@ -232,11 +232,73 @@ Input: "copyright"
 Output: true
 
 Repeat:
-Examples:
+  // Efficiently check that all characters in a string are unique without using data structures
+  // strings only contain a-z characters
+
+Example:
+
+  Input: "asdsafsadsafdsa"
+  Output: "false"
+
+  Input: "abcd"
+  Output: "True"
+
 Approach:
+  // Input is a string
+  // Output is a bool
+  // For loop with iteration over each character in the string
+  // Cross checking each character after it for unquiness
+  // Returns true if all characters in the string are unique
+  // Else false
+
 Code:
+WithIteration:
+function isStringUnique(str) {
+  let i;
+  let character;
+  
+  // To deal with edge cases
+  if (str.length > 127) {
+    return false;
+  }
+  // Is the input string ASCII or Unicode ? If ASCII then we need storage size of 128 bits
+
+  for (i = 0; i < str.length; i++) {
+    character = str[i];
+    if (str.indexOf(character, i + 1) > -1) {
+      return false;
+    }
+  }
+  return true;
+}
+console.log(isStringUnique('wise')); // true
+console.log(isStringUnique('fool')); // false
+
+WithRecursion:
+
 Test:
+  // Vocally iterate through code
+  // wise
+  // fool
+
 Optimize:
+
+// Use an object for faster results
+// Object can have one or multiple properties
+// Each property has a property key and its associated value
+function is_unique(str) {
+  let obj = {};
+  for(let z = 0; z < str.length; ++z) {
+    let character = str[z];
+    if(obj[character]) 
+    return false; 
+    else obj[character] = true;
+  }
+  return true;
+}
+// test:
+console.log(is_unique("abcdefgh")); // true
+console.log(is_unique("aa")); // false
 
 
 
@@ -259,15 +321,98 @@ Optimize:
 // Selection sort
 // You may implement any of the above algorithms (or your own) to solve the problem - as long as it doesn't use sort().
 
-Example
 Input: [9, 2, 7, 12]
 
 Output: [2, 7, 9, 12]
 
 
 Repeat:
+  // Sort an array of only numbers without using a direct comparision? 
+  // No special characters
+
 Examples:
+
+  Input:  [75, 8, 250, 0, 20]
+  Output: [0, 8, 20, 75, 250]
+
 Approach:
+
+  // without the ability to use the classic sort() I think the next "best" or simplest appraoch would be to use bubble sort
+  // bubble sort works by repeatedly stepping through the array and swapping elements that are out of order
+  // you move from an unsorted list to a sorted list
+  // current always starts at index zero and then compares itself to the next element
+  // if the next element is less than the current then current swaps places with the next element
+
 Code:
+WithIteration:
+let numbers = [75, 8, 250, 0, 20];
+
+function bubbleSort(array) {
+  let done = false;
+  while (!done) {
+    done = true;
+    for (let i = 1; i < array.length; i += 1) {
+      if (array[i - 1] > array[i]) {
+        done = false;
+        let temp = array[i - 1];
+        array[i - 1] = array[i];
+        array[i] = temp;
+      }
+    }
+  }
+  return array;
+}
+bubbleSort(numbers);
+console.log(numbers);
+Output: [0, 8, 20, 75, 250]
+
+
+
+WithRecursion: In C#
+// Base Case: If array size is 1, return.
+// Do One Pass of normal Bubble Sort. This pass fixes last element of current subarray.
+// Recur for all elements except last of current subarray.
+
+static void bubbleSort(int []arr, int n) 
+{ 
+// Base case 
+if (n == 1) 
+return; 
+
+// One pass of bubble  
+// sort. After this pass, 
+// the largest element 
+// is moved (or bubbled)  
+// to end. 
+for (int i = 0; i < n - 1; i++) 
+if (arr[i] > arr[i + 1]) 
+{ 
+// swap arr[i], arr[i+1] 
+int temp = arr[i]; 
+arr[i] = arr[i + 1]; 
+arr[i + 1] = temp; 
+} 
+
+// Largest element is fixed, 
+// recur for remaining array 
+bubbleSort(arr, n - 1); 
+} 
+
+// Driver code 
+static void Main() 
+{ 
+    int []arr = {64, 34, 25, 12, 22, 11, 90}; 
+  
+    bubbleSort(arr, arr.Length); 
+      
+    Console.WriteLine("Sorted array : "); 
+    for(int i = 0; i < arr.Length; i++) 
+    Console.Write(arr[i] + " "); 
+} 
+
 Test:
+  // Vocally walk through the code with an input
+
 Optimize:
+
+// Before enter the inner loop, create a boolean to check if a swap occured inside the inner loop. When the there is no swap the array is sorted. 
