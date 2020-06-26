@@ -37,6 +37,38 @@ console.log(frank.split(' ').join('%20'));
 return frank;
   WithRecursion:
   // I am unsure
+  function getString(o) {
+
+    function iter(o, path) {
+        if (Array.isArray(o)) {
+            o.forEach(function (a) {
+                iter(a, path + '[]');
+            });
+            return;
+        }
+        if (o !== null && typeof o === 'object') {
+            Object.keys(o).forEach(function (k) {
+                iter(o[k], path + '[' + k + ']');
+            });
+            return;
+        }
+        data.push(path + '=' + o);
+    }
+
+    var data = [];
+    Object.keys(o).forEach(function (k) {
+        iter(o[k], k);
+    });
+    return data.join('&');
+}
+
+var data1 = { filter: { dir: 184 }, b: 'a' },
+    data2 = { filter: [1, 2, 3], b: 'a' },
+    data3 = { filter: [1, 2, 3], b: 'a', c: { d: { e: 42 } } };
+
+console.log(getString(data1));
+console.log(getString(data2));
+console.log(getString(data3));
 
 Test:
   // Vocally run an example through
@@ -106,8 +138,27 @@ WithoutFilter: WithoutRecursion:
   }
   console.log(secondArray);
 
-  WithoutFilter: WithRecursion:
+  WithRecursion: C# ?
     // You select the first key value pair of the array and iterate through the array crosschecking it against everyother pair removing any duplications
+    public static void removeDuplicates(ArrayList<Integer> list, int counter){
+
+
+      if(list == null){
+          throw new NullPointerException();
+      }
+
+      if(counter < list.size()){
+          if(list.contains(list.get(counter))){
+              if(list.lastIndexOf(list.get(counter))!=counter)
+              {
+                  list.remove(list.lastIndexOf(list.get(counter)));
+                  counter--;
+              }
+          }
+          removeDuplicates(list, ++counter);
+      }
+
+  }
 
 Test:
   // Vocally run and example through
